@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Sqlite database
+migration/database.db
+
+# Idea
+.idea
+
 # Distribution / packaging
 .Python
 build/
