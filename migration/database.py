@@ -41,7 +41,8 @@ class Database:
     def execute(self, query):
         with closing(sqlite3.connect(self.get_database_default_path())) as connection:
             with closing(connection.cursor()) as cursor:
-                return cursor.execute(query)
+                cursor.execute(query)
+                connection.commit()
 
     def is_database_empty(self):
         return self.fetchone("SELECT name FROM sqlite_master") is None
