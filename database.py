@@ -25,8 +25,6 @@ class Database:
             file = open(self.get_database_default_path(), 'w')
             file.close()
             print("Created sqlite database at path:", self.get_database_default_path())
-        else:
-            print("Database already exists at path:", self.get_database_default_path())
 
     def fetchone(self, query):
         with closing(sqlite3.connect(self.get_database_default_path())) as connection:

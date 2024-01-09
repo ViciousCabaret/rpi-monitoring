@@ -13,3 +13,8 @@ class MonitoringRecordNotInitialized(Exception):
 
 class GoogleDriveFileUploadException(Exception):
     pass
+
+
+class FileDoesNotExistsException(Exception):
+    def __init__(self, msg='File does not exist', *args, **kwargs):
+        super().__init__(msg, *args, **kwargs)
