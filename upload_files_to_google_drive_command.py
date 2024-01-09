@@ -7,7 +7,7 @@ from monitoring_recording import MonitoringRecording
 BASE_DIR = os.path.dirname(__file__)
 
 if __name__ == '__main__':
-    print("Command started")
+    print("Command upload_files_to_google_drive_command.py started")
     print("Retrieving not sent monitoring recordings from database")
     monitoring_recordings = MonitoringRecording.get_not_sent()
     google_drive_client = GoogleDriveClient()

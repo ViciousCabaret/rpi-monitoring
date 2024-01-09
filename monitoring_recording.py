@@ -26,6 +26,13 @@ class MonitoringRecording:
         except IntegrityError as e:
             raise SaveMonitoringRecordIntoDatabase("Monitoring recording with this name already exists")
 
+    def delete(self):
+        if self.id is None:
+            raise MonitoringRecordNotInitialized()
+
+        database = Database()
+        database.execute("DELETE FROM monitoring_recordings WHERE id = {}".format(self.id))
+
     @staticmethod
     def get(id: int):
         database = Database()
@@ -54,6 +61,24 @@ class MonitoringRecording:
                 id=datum[0],
                 timestamp=datum[3]
             ))
+
+        return results
+
+    @staticmethod
+    def get_sent():
+        database = Database()
+        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = TRUE')
+
+        results = []
+        for datum in data:
+            results.append(
+                MonitoringRecording(
+                    datum[1],
+                    is_sent=bool(datum[2]),
+                    id=datum[0],
+                    timestamp=datum[3]
+                )
+            )
 
         return results
 
