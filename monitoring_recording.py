@@ -1,7 +1,7 @@
 from sqlite3 import IntegrityError
 from typing import Optional
-from exception.exception import SaveMonitoringRecordIntoDatabase
-from migration.database import Database
+from error import SaveMonitoringRecordIntoDatabase, MonitoringRecordNotInitialized
+from database import Database
 
 
 class MonitoringRecording:
@@ -44,7 +44,7 @@ class MonitoringRecording:
     @staticmethod
     def get_not_sent():
         database = Database()
-        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = true')
+        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = FALSE')
 
         results = []
         for datum in data:
@@ -56,3 +56,10 @@ class MonitoringRecording:
             ))
 
         return results
+
+    def mark_as_sent(self):
+        if self.id is None:
+            raise MonitoringRecordNotInitialized()
+
+        database = Database()
+        database.execute("UPDATE monitoring_recordings SET is_sent = TRUE WHERE id = {}".format(self.id))

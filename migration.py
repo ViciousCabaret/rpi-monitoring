@@ -1,6 +1,6 @@
 import os
 
-from migration.database import Database
+from database import Database
 
 BASE_DIR = os.path.dirname(__file__)
 
