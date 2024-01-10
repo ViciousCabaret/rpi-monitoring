@@ -52,7 +52,7 @@ while True:
                 monitoring_recording.save()
             ltime = time.time()
         else:
-            if encoding and time.time() - ltime > 5.0:
+            if encoding and time.time() - ltime > 3.0:
                 picam2.stop_encoder()
                 encoding = False
     prev = cur
