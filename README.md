@@ -29,8 +29,9 @@
   
 
 #### SHOWTIME:
-- to run the whole system make sure that:
+- make sure that:
   - you have credentials.json file
   - .env file contains correct GOOGLE_DRIVE_FOLDER_ID value
   - cronjob is set
   - database is migrated
+- run: `python3.11 capture_motion.py`
