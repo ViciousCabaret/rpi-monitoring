@@ -40,7 +40,8 @@ while True:
         mse = np.square(np.subtract(cur, prev)).mean()
         if mse > 7:
             if not encoding:
-                filename = str(datetime.now()) + '.h264'
+                datetime_now = str(datetime.now())
+                filename = '{}.h264'.format(datetime_now)
                 print(filename)
                 encoder.output = FileOutput(os.path.join('monitoring_recording_files', filename))
                 print(filename)
