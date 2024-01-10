@@ -26,7 +26,7 @@ if __name__ == '__main__':
     for monitoring_recording in monitoring_recordings:
         try:
             logging.info("Uploading monitoring recording {} into google drive".format(monitoring_recording.name))
-            filepath = os.path.join('monitoring_recording_files', monitoring_recording.name)
+            filepath = os.path.join(BASE_DIR, 'monitoring_recording_files', monitoring_recording.name)
             google_drive_client.upload_h264_file(filepath)
             monitoring_recording.mark_as_sent()
             logging.info("Successfully uploaded monitoring recording {}".format(filepath))

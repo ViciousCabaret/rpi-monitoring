@@ -12,10 +12,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 
-# A single auth scope is used for the zero-touch enrollment customer API.
-SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_KEY_FILE = 'credentials.json'
-
 
 class GoogleDriveClient:
     SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -28,7 +24,7 @@ class GoogleDriveClient:
 
     def get_credentials(self):
         credential = ServiceAccountCredentials.from_json_keyfile_name(
-            os.path.join(BASE_DIR, SERVICE_ACCOUNT_KEY_FILE), SCOPES)
+            os.path.join(BASE_DIR, self.SERVICE_ACCOUNT_KEY_FILE), self.SCOPES)
 
         if not credential or credential.invalid:
             print('Unable to authenticate using service account key.')
@@ -50,7 +46,8 @@ class GoogleDriveClient:
                 self.get_service().files().create(
                     body={"name": tail, "parents": [self.google_dir_id]},
                     media_body=media
-                ).execute())
+                ).execute()
+            )
 
             print(f'Uploaded file ID: {file.get("id")}')
 
