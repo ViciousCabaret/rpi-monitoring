@@ -20,7 +20,7 @@ if __name__ == '__main__':
     logging.info("Retrieving not sent monitoring recordings from database")
 
     monitoring_recordings = MonitoringRecording.get_not_sent()
-    google_drive_client = GoogleDriveClient()
+    google_drive_client = GoogleDriveClient(os.getenv("GOOGLE_DRIVE_FOLDER_ID"))
 
     logging.info("Found " + str(len(monitoring_recordings)) + " monitoring recordings to upload")
     for monitoring_recording in monitoring_recordings:
