@@ -33,3 +33,5 @@ if __name__ == '__main__':
 
         except GoogleDriveFileUploadException as e:
             logging.error(e)
+        except Exception as e:
+            logging.error(e)
