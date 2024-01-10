@@ -1,6 +1,9 @@
 from error import GoogleDriveFileUploadException
 from google_client import GoogleDriveClient
 from monitoring_recording import MonitoringRecording
+from dotenv import load_dotenv
+
+load_dotenv()
 
 import logging
 import os

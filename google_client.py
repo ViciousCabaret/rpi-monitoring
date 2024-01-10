@@ -20,8 +20,11 @@ SERVICE_ACCOUNT_KEY_FILE = 'credentials.json'
 class GoogleDriveClient:
     SCOPES = ['https://www.googleapis.com/auth/drive']
     SERVICE_ACCOUNT_KEY_FILE = 'credentials.json'
-    GOOGLE_DIR_ID = "179zvkP60csuLPrLMsZH_x7g3MI4kzVlQ"
     service = None
+    google_dir_id = None
+
+    def __init__(self, google_dir_id):
+        self.google_dir_id = google_dir_id
 
     def get_credentials(self):
         credential = ServiceAccountCredentials.from_json_keyfile_name(
@@ -45,7 +48,7 @@ class GoogleDriveClient:
             head, tail = os.path.split(filepath)
             file = (
                 self.get_service().files().create(
-                    body={"name": tail, "parents": ["179zvkP60csuLPrLMsZH_x7g3MI4kzVlQ"]},
+                    body={"name": tail, "parents": [self.google_dir_id]},
                     media_body=media
                 ).execute())
 
