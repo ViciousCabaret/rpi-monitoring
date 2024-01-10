@@ -44,8 +44,8 @@ while True:
                 encoder.output = FileOutput(filename)
                 picam2.start_encoder(encoder)
                 encoding = True
-                print("New Motion", mse)
-                logging.info("New Motion" + mse)
+                print("New Motion", str(mse))
+                logging.info("New Motion" + str(mse))
                 monitoring_recording = MonitoringRecording(filename)
                 monitoring_recording.save()
             ltime = time.time()
