@@ -10,9 +10,10 @@ from libcamera import controls
 from datetime import datetime
 
 from monitoring_recording import MonitoringRecording
+BASE_DIR = os.path.dirname(__file__)
 
 logging.basicConfig(
-    filename=os.path.join('log', 'capture_motion.log'),
+    filename=os.path.join(BASE_DIR, 'log', 'capture_motion.log'),
     encoding='utf-8',
     level=logging.DEBUG,
     format='%(asctime)s %(message)s'
@@ -42,15 +43,11 @@ while True:
             if not encoding:
                 datetime_now = str(datetime.now())
                 filename = '{}.h264'.format(datetime_now)
-                print(filename)
-                encoder.output = FileOutput(os.path.join('monitoring_recording_files', filename))
-                print(filename)
+                encoder.output = FileOutput(os.path.join(BASE_DIR, 'monitoring_recording_files', filename))
                 picam2.start_encoder(encoder)
                 encoding = True
-                print(filename)
                 print("New Motion", str(mse))
                 logging.info("New Motion" + str(mse))
-                print(filename)
                 monitoring_recording = MonitoringRecording(filename)
                 monitoring_recording.save()
             ltime = time.time()

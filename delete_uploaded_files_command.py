@@ -4,8 +4,10 @@ from monitoring_recording import MonitoringRecording
 import os
 import logging
 
+BASE_DIR = os.path.dirname(__file__)
+
 logging.basicConfig(
-    filename=os.path.join('log', 'delete_uploaded_files_command.log'),
+    filename=os.path.join(BASE_DIR, 'log', 'delete_uploaded_files_command.log'),
     encoding='utf-8',
     level=logging.DEBUG,
     format='%(asctime)s %(message)s'
@@ -22,7 +24,7 @@ if __name__ == '__main__':
         logging.info("Deleting already uploaded monitoring recording {}".format(monitoring_recording.name))
 
         try:
-            filepath = os.path.join('monitoring_recording_files', monitoring_recording.name)
+            filepath = os.path.join(BASE_DIR, 'monitoring_recording_files', monitoring_recording.name)
 
             if os.path.exists(filepath):
                 os.remove(filepath)

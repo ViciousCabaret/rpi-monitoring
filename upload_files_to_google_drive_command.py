@@ -5,13 +5,13 @@ from monitoring_recording import MonitoringRecording
 import logging
 import os
 
+BASE_DIR = os.path.dirname(__file__)
 logging.basicConfig(
-    filename=os.path.join('log', 'upload_files_to_google_drive_command.log'),
+    filename=os.path.join(BASE_DIR, 'log', 'upload_files_to_google_drive_command.log'),
     encoding='utf-8',
     level=logging.DEBUG,
     format='%(asctime)s %(message)s'
 )
-BASE_DIR = os.path.dirname(__file__)
 if __name__ == '__main__':
     logging.info("Command upload_files_to_google_drive_command.py started")
     logging.info("Retrieving not sent monitoring recordings from database")
