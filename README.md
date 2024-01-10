@@ -1,7 +1,7 @@
 # RPI-MONITORING
 
 #### FIRST THINGS FIRST:
-- make sure that all raspberry pi packages regarding camera are installed
+- make sure that all raspberry pi packages regarding camera are installed (in case of any problems check picamera2 manual https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)
 - `git clone https://github.com/ViciousCabaret/rpi-monitoring.git`
 - create python env with command: `python3.11 -m venv .venv --system-site-packages` 
 - my recommendation is to use venv: `source .venv/bin/activate`
@@ -27,3 +27,10 @@
 - upload_files_to_google_drive_command.py: responsible for uploading saved monitoring recordings into Google Drive
 - delete_uploaded_files_command.py: responsible for deleting already uploaded monitoring recordings to save space on card
   
+
+#### SHOWTIME:
+- to run the whole system make sure that:
+  - you have credentials.json file
+  - .env file contains correct GOOGLE_DRIVE_FOLDER_ID value
+  - cronjob is set
+  - database is migrated
