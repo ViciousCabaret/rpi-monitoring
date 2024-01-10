@@ -41,11 +41,15 @@ while True:
         if mse > 7:
             if not encoding:
                 filename = str(datetime.now()) + '.h264'
+                print(filename)
                 encoder.output = FileOutput(os.path.join('monitoring_recording_files', filename))
+                print(filename)
                 picam2.start_encoder(encoder)
                 encoding = True
+                print(filename)
                 print("New Motion", str(mse))
                 logging.info("New Motion" + str(mse))
+                print(filename)
                 monitoring_recording = MonitoringRecording(filename)
                 monitoring_recording.save()
             ltime = time.time()
