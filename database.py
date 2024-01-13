@@ -27,17 +27,17 @@ class Database:
             print("Created sqlite database at path:", self.get_database_default_path())
 
     def fetchone(self, query):
-        with closing(sqlite3.connect(self.get_database_default_path())) as connection:
+        with closing(sqlite3.connect(self.get_database_default_path(), timeout=15)) as connection:
             with closing(connection.cursor()) as cursor:
                 return cursor.execute(query).fetchone()
 
     def fetchall(self, query):
-        with closing(sqlite3.connect(self.get_database_default_path())) as connection:
+        with closing(sqlite3.connect(self.get_database_default_path(), timeout=15)) as connection:
             with closing(connection.cursor()) as cursor:
                 return cursor.execute(query).fetchall()
 
     def execute(self, query):
-        with closing(sqlite3.connect(self.get_database_default_path())) as connection:
+        with closing(sqlite3.connect(self.get_database_default_path(), timeout=15)) as connection:
             with closing(connection.cursor()) as cursor:
                 cursor.execute(query)
                 connection.commit()
