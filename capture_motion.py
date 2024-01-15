@@ -39,7 +39,7 @@ while True:
         # Measure pixels differences between current and
         # previous frame
         mse = np.square(np.subtract(cur, prev)).mean()
-        if mse > 7:
+        if mse > 4:
             if not encoding:
                 datetime_now = str(datetime.now())
                 filename = '{}.h264'.format(datetime_now)
