@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(__file__)
 logging.basicConfig(
     filename=os.path.join(BASE_DIR, 'log', 'capture_motion.log'),
     encoding='utf-8',
-    level=logging.DEBUG,
+    level=logging.WARNING,
     format='%(asctime)s %(message)s'
 )
 
