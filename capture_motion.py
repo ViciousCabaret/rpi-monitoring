@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(__file__)
 logging.basicConfig(
     filename=os.path.join(BASE_DIR, 'log', 'capture_motion.log'),
     encoding='utf-8',
-    level=logging.WARNING,
+    level=logging.INFO,
     format='%(asctime)s %(message)s'
 )
 
@@ -31,6 +31,7 @@ w, h = lsize
 prev = None
 encoding = False
 ltime = 0
+filename = None
 
 while True:
     cur = picam2.capture_buffer("lores")
@@ -48,11 +49,14 @@ while True:
                 encoding = True
                 print("New Motion", str(mse))
                 logging.info("New Motion" + str(mse))
-                monitoring_recording = MonitoringRecording(filename)
-                monitoring_recording.save()
             ltime = time.time()
         else:
-            if encoding and time.time() - ltime > 3.0:
+            if encoding and time.time() - ltime > 5.0:
                 picam2.stop_encoder()
+                logging.info("Recording stopped, file saved")
+
+                monitoring_recording = MonitoringRecording(filename)
+                monitoring_recording.save()
+
                 encoding = False
     prev = cur
