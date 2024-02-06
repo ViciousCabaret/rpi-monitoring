@@ -32,6 +32,7 @@ prev = None
 encoding = False
 ltime = 0
 filename = None
+start_time = None
 
 while True:
     cur = picam2.capture_buffer("lores")
@@ -49,9 +50,10 @@ while True:
                 encoding = True
                 print("New Motion", str(mse))
                 logging.info("New Motion" + str(mse))
+                start_time = time.time()
             ltime = time.time()
         else:
-            if encoding and time.time() - ltime > 5.0:
+            if (encoding and time.time() - ltime > 5.0) or (start_time is not None and encoding and time.time() - start_time > 30):
                 picam2.stop_encoder()
                 logging.info("Recording stopped, file saved")
 
@@ -59,4 +61,5 @@ while True:
                 monitoring_recording.save()
 
                 encoding = False
+                start_time = None
     prev = cur
