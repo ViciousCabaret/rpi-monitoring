@@ -29,7 +29,10 @@ class GoogleDriveClient:
         if not credential or credential.invalid:
             print('Unable to authenticate using service account key.')
             sys.exit()
-        return credential
+
+        credentials = credential.with_subject("mikolaj.porebski@gmail.com")
+
+        return credentials
 
     def get_service(self):
         if self.service is None:
