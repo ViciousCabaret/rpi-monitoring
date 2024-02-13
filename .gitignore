@@ -5,6 +5,7 @@ __pycache__/
 
 #custom
 credentials.json
+credentials-old.json
 .DS_STORE
 
 # C extensions
