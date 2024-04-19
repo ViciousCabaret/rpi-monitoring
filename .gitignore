@@ -4,8 +4,9 @@ __pycache__/
 *$py.class
 
 #custom
-credentials.json
+credentials-old-2.json
 credentials-old.json
+credentials.json
 .DS_STORE
 
 # C extensions
