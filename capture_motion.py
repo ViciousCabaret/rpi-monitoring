@@ -62,5 +62,6 @@ while True:
 
                 encoding = False
                 start_time = None
-        logging.info("motion: " + str(mse))
+        if encoding:
+             logging.info("motion: " + str(mse))
     prev = cur
