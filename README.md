@@ -35,3 +35,8 @@
   - cronjob is set
   - database is migrated
 - run: `python3.11 capture_motion.py`
+
+---
+
+Simple monitoring project, that detects motion on plugged camera device on raspberry pi, and sends it to defined google drive folder
+The processes and architecture are optimized for the lowest SD memory card storage consumption
