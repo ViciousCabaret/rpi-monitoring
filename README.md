@@ -40,6 +40,7 @@
 
 ## About:
 Simple monitoring project, that detects motion on plugged camera device on raspberry pi, and sends it to defined google drive folder
+
 The processes and architecture are optimized for the lowest SD memory card storage consumption
 
 Things that can be improved:
