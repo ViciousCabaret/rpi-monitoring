@@ -17,7 +17,7 @@ if __name__ == '__main__':
     logging.info("Command delete_uploaded_files_command.py started")
     logging.info("Retrieving sent monitoring recordings from database")
 
-    monitoring_recordings = MonitoringRecording.get_sent()
+    monitoring_recordings = MonitoringRecording.get_ready_to_delete()
     logging.info("Found " + str(len(monitoring_recordings)) + " monitoring recordings to delete")
 
     for monitoring_recording in monitoring_recordings:

@@ -9,12 +9,14 @@ class MonitoringRecording:
     name: str = None
     is_sent: bool = None
     timestamp: Optional[int] = None
+    human_analysis_status: str = None
 
     def __init__(self, name: str, *args, **kwargs) -> None:
         self.name = name
         self.is_sent = kwargs.get('is_sent', False)
         self.id = kwargs.get('id', None)
         self.timestamp = kwargs.get('timestamp', None)
+        self.human_analysis_status = kwargs.get('human_analysis_status', 'NONE')
 
     def save(self):
         database = Database()
@@ -45,13 +47,29 @@ class MonitoringRecording:
             data[1],
             is_sent=bool(data[2]),
             id=data[0],
-            timestamp=data[3]
+            timestamp=data[3],
+            human_analysis_status=data[4],
         )
 
     @staticmethod
-    def get_not_sent():
+    def get_ready_to_analysis():
         database = Database()
-        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = FALSE')
+        data = database.fetchone(f'SELECT * FROM monitoring_recordings WHERE human_analysis_status like "NONE"')
+        results = []
+        for datum in data:
+            results.append(MonitoringRecording(
+                datum[1],
+                is_sent=bool(datum[2]),
+                id=datum[0],
+                timestamp=datum[3],
+                human_analysis_status=datum[4],
+            ))
+        return results
+
+    @staticmethod
+    def get_ready_to_send():
+        database = Database()
+        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = FALSE AND human_analysis_status like "POSITIVE"')
 
         results = []
         for datum in data:
@@ -59,15 +77,16 @@ class MonitoringRecording:
                 datum[1],
                 is_sent=bool(datum[2]),
                 id=datum[0],
-                timestamp=datum[3]
+                timestamp=datum[3],
+                human_analysis_status=datum[4],
             ))
 
         return results
 
     @staticmethod
-    def get_sent():
+    def get_ready_to_delete():
         database = Database()
-        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = TRUE')
+        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE is_sent = TRUE OR human_analysis_status like "NEGATIVE"')
 
         results = []
         for datum in data:
@@ -81,6 +100,20 @@ class MonitoringRecording:
             )
 
         return results
+
+    def mark_as_analyzed_positive(self):
+        if self.id is None:
+            raise MonitoringRecordNotInitialized()
+
+        database = Database()
+        database.execute("UPDATE monitoring_recordings SET human_analysis_status = 'POSITIVE' WHERE id = {}".format(self.id))
+
+    def mark_as_analyzed_negative(self):
+        if self.id is None:
+            raise MonitoringRecordNotInitialized()
+
+        database = Database()
+        database.execute("UPDATE monitoring_recordings SET human_analysis_status = 'NEGATIVE' WHERE id = {}".format(self.id))
 
     def mark_as_sent(self):
         if self.id is None:
