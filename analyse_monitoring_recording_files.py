@@ -11,6 +11,7 @@ import tensorflow as tf
 
 MODEL_PATH = 'model.tflite'
 BASE_DIR = os.path.dirname(__file__)
+FRAMES_WITH_HUMAN_DETECTED_POSITIVE = 5
 
 interpreter = tf.lite.Interpreter(model_path=MODEL_PATH)
 interpreter.allocate_tensors()
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     for monitoring_recording in monitoring_recordings:
         analysis_status = False
         logging.info("Analysing monitoring recording {}".format(monitoring_recording.name))
+        human_detected_frames_count = 0
 
         try:
             filepath = os.path.join(BASE_DIR, 'monitoring_recording_files', monitoring_recording.name)
@@ -67,9 +69,12 @@ if __name__ == '__main__':
                     for i in range(len(scores)):
                         if scores[i] > 0.5:
                             class_id = int(classes[i])
+                            print(class_id)
                             if class_id == 0:
-                                analysis_status = True
-                                break
+                                human_detected_frames_count += 1
+                                if human_detected_frames_count == FRAMES_WITH_HUMAN_DETECTED_POSITIVE:
+                                    analysis_status = True
+                                    break
 
                 if analysis_status is True:
                     monitoring_recording.mark_as_analyzed_positive()
