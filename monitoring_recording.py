@@ -52,9 +52,9 @@ class MonitoringRecording:
         )
 
     @staticmethod
-    def get_ready_to_analysis():
+    def get_ready_to_analysis(self):
         database = Database()
-        data = database.fetchone(f'SELECT * FROM monitoring_recordings WHERE human_analysis_status like "NONE"')
+        data = database.fetchall(f'SELECT * FROM monitoring_recordings WHERE human_analysis_status like "NONE"')
         results = []
         for datum in data:
             results.append(MonitoringRecording(
