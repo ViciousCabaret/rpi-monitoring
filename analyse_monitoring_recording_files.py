@@ -68,7 +68,7 @@ if __name__ == '__main__':
                     scores = interpreter.get_tensor(output_details[2]['index'])[0]
 
                     for i in range(len(scores)):
-                        if scores[i] > 0.7:
+                        if scores[i] > 0.5:
                             class_id = int(classes[i])
                             print(class_id)
                             if class_id == 0:
@@ -80,7 +80,6 @@ if __name__ == '__main__':
 
             if analysis_status is True:
                 monitoring_recording.mark_as_analyzed_positive()
-                break
             else:
                 monitoring_recording.mark_as_analyzed_negative()
 
