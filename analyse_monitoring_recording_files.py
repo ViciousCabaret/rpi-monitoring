@@ -36,6 +36,7 @@ if __name__ == '__main__':
     logging.info("Found " + str(len(monitoring_recordings)) + " monitoring recordings to analyse")
 
     for monitoring_recording in monitoring_recordings:
+        print("Analysing monitoring recording: {}".format(monitoring_recording.name))
         analysis_status = False
         logging.info("Analysing monitoring recording {}".format(monitoring_recording.name))
         human_detected_frames_count = 0
@@ -67,19 +68,22 @@ if __name__ == '__main__':
                     scores = interpreter.get_tensor(output_details[2]['index'])[0]
 
                     for i in range(len(scores)):
-                        if scores[i] > 0.5:
+                        if scores[i] > 0.7:
                             class_id = int(classes[i])
                             print(class_id)
                             if class_id == 0:
                                 human_detected_frames_count += 1
                                 if human_detected_frames_count == FRAMES_WITH_HUMAN_DETECTED_POSITIVE:
                                     analysis_status = True
-                                    break
-
                 if analysis_status is True:
-                    monitoring_recording.mark_as_analyzed_positive()
-                else:
-                    monitoring_recording.mark_as_analyzed_negative()
+                    break
+
+            if analysis_status is True:
+                monitoring_recording.mark_as_analyzed_positive()
+                break
+            else:
+                monitoring_recording.mark_as_analyzed_negative()
+
         except MonitoringRecordNotInitialized as e:
             logging.error(e)
         except FileDoesNotExistsException as e:
